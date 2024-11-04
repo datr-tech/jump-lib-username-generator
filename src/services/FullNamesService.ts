@@ -3,35 +3,44 @@ import { FileServiceDelimiterEnum } from '@app/config/enums';
 import {
 	ICommonFileContentsStr,
 	ICommonFullNameStr,
-	ICommonFuncMain, ICommonPathStr
+	ICommonFuncMain,
+	ICommonPathStr,
 } from '@app/interfaces/common';
 import {
 	IServiceFullNames,
 	IServiceFullNamesConstructor,
 	IServiceFullNamesConstructorInput,
-	IServiceFullNamesFuncGetFullNames
+	IServiceFullNamesFuncGetFullNames,
 } from '@app/interfaces/services';
+import { assertCondition } from '@app/assertions';
 
 export const FullNamesService: IServiceFullNamesConstructor = ({
-	filePathService
-}: IServiceFullNamesConstructorInput ): IServiceFullNames => {
+	filePathService,
+}: IServiceFullNamesConstructorInput): IServiceFullNames => {
 	let fullNames: ICommonFullNameStr[];
 
 	const getFullNames: IServiceFullNamesFuncGetFullNames = (): ICommonFullNameStr[] => fullNames;
 
 	const main: ICommonFuncMain = (): void => {
-		const filePathStr: ICommonPathStr = filePathService.getFilePath();
-		const fileContents: ICommonFileContentsStr = readFileSync(filePathStr, 'utf-8').toString();
 		const delimiter: FileServiceDelimiterEnum = filePathService.splitBy();
 
-		if (delimiter !== FileServiceDelimiterEnum.NOT_APPLICABLE) {
-			fullNames = fileContents.split(delimiter);
-		} else {
-			fullNames = [];
-		}
-	}
+		assertCondition({
+			condition: delimiter !== FileServiceDelimiterEnum.NULL,
+			errorMessage: "Invalid 'delimiter'",
+		});
+
+		const filePathStr: ICommonPathStr = filePathService.getFilePath();
+		const fileContents: ICommonFileContentsStr = readFileSync(filePathStr, 'utf-8').toString();
+
+		assertCondition({
+			condition: !!fileContents,
+			errorMessage: "Invalid 'fileContents'",
+		});
+
+		fullNames = fileContents.split(delimiter.toString());
+	};
 
 	main();
 
-	return { getFullNames };
-}
+	return { getFullNames } as IServiceFullNames;
+};

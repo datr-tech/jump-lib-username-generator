@@ -1,4 +1,4 @@
-import { IModelFullName }	from "./IModelFullName";
+import { IModelFullName } from './IModelFullName';
 import { IModelFullNameConstructorInput } from './IModelFullNameConstructorInput';
 
 export interface IModelFullNameConstructor {

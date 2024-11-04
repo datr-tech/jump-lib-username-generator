@@ -1,20 +1,16 @@
 import { assertCondition } from '@app/assertions';
-import {
-	ICommonFullNameStr,
-	ICommonFuncMain,
-	ICommonNameStr
-} from '@app/interfaces/common';
+import { ICommonFullNameStr, ICommonFuncMain, ICommonNameStr } from '@app/interfaces/common';
 import {
 	IModelFullName,
 	IModelFullNameConstructor,
 	IModelFullNameConstructorInput,
 	IModelFullNameFuncGetForename,
-	IModelFullNameFuncGetSurname
+	IModelFullNameFuncGetSurname,
 } from '@app/interfaces/models';
 
 export const FullNameModel: IModelFullNameConstructor = ({
 	fullNameStr,
-	fullNameDelimiter
+	fullNameDelimiterEnum,
 }: IModelFullNameConstructorInput): IModelFullName => {
 	let forename: ICommonNameStr;
 	let surname: ICommonNameStr;
@@ -23,14 +19,21 @@ export const FullNameModel: IModelFullNameConstructor = ({
 	const getSurname: IModelFullNameFuncGetSurname = (): ICommonNameStr => surname;
 
 	const main: ICommonFuncMain = (): void => {
+		assertCondition({
+			condition: !!fullNameStr,
+			errorMessage: "Invalid 'fullNameStr'",
+		});
+
 		const fullNameStrTrimmed: ICommonFullNameStr = fullNameStr.trim();
 
 		assertCondition({
 			condition: !!fullNameStrTrimmed,
-			errorMessage: "Invalid 'fullNameStr'",
+			errorMessage: "Invalid 'fullNameStrTrimmed'",
 		});
 
-		const fullNameArr: ICommonNameStr[] = fullNameStrTrimmed.split(fullNameDelimiter.toString());
+		const fullNameArr: ICommonNameStr[] = fullNameStrTrimmed.split(
+			fullNameDelimiterEnum.toString(),
+		);
 		const fullNameArrLen: number = fullNameArr.length;
 
 		assertCondition({
@@ -44,15 +47,16 @@ export const FullNameModel: IModelFullNameConstructor = ({
 		});
 
 		assertCondition({
-			condition: typeof fullNameArr[fullNameArrLen - 1] !== 'undefined' && !!fullNameArr[fullNameArrLen - 1],
+			condition:
+				typeof fullNameArr[fullNameArrLen - 1] !== 'undefined' && !!fullNameArr[fullNameArrLen - 1],
 			errorMessage: "Invalid 'surname'",
 		});
 
-		forename = fullNameArr[0].trim();
-		surname = fullNameArr[fullNameArrLen - 1].trim();
-	}
+		forename = fullNameArr[0];
+		surname = fullNameArr[fullNameArrLen - 1];
+	};
 
 	main();
 
 	return { getForename, getSurname };
-}
+};

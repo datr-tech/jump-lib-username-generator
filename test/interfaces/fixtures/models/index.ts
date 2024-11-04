@@ -1,0 +1,1 @@
+export { IFixtureFullNameModelNegative } from './IFixtureFullNameModelNegative';

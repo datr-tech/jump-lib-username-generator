@@ -7,14 +7,14 @@ import {
 	IServiceFilePathConstructor,
 	IServiceFilePathConstructorInput,
 	IServiceFilePathFuncGetFilePath,
-	IServiceFilePathFuncSplitBy
+	IServiceFilePathFuncSplitBy,
 } from '@app/interfaces/services';
 
 export const FilePathService: IServiceFilePathConstructor = ({
 	filePathStr,
-	delimiter = FileServiceDelimiterEnum.NOT_APPLICABLE,
+	delimiter = FileServiceDelimiterEnum.NULL,
 	existsFn = existsSync,
-	statFn = statSync
+	statFn = statSync,
 }: IServiceFilePathConstructorInput): IServiceFilePath => {
 	const getFilePath: IServiceFilePathFuncGetFilePath = (): ICommonPathStr => filePathStr;
 	const splitBy: IServiceFilePathFuncSplitBy = (): FileServiceDelimiterEnum => delimiter;
@@ -22,11 +22,11 @@ export const FilePathService: IServiceFilePathConstructor = ({
 	const main: ICommonFuncMain = (): void => {
 		assertCondition({
 			condition: !!filePathStr && existsFn(filePathStr) && statFn(filePathStr).isFile(),
-			errorMessage: "Invalid 'filePathStr'"
+			errorMessage: "Invalid 'filePathStr'",
 		});
-	}
+	};
 
 	main();
 
 	return { getFilePath, splitBy };
-}
+};

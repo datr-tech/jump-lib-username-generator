@@ -1,0 +1,1 @@
+export { fullNameModelNegativeFixture } from './fullNameModelNegativeFixture';
