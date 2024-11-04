@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "baseUrl": ".",
+      "declaration": true,
+      "esModuleInterop": true,
+      "lib": ["es2015"],
+      "module": "commonjs",
+      "moduleResolution": "node",
+      "outDir": "./dist",
+      "paths": {
+        "@app/*": ["./src/*"],
+        "@dist/*": ["./dist/*"],
+        "@test/*": ["./test/*"],
+      },
+      "target": "es5",
+      "resolveJsonModule": true,
+      "skipLibCheck": true,
+      "sourceMap": true,
+    },
+    "exclude": [
+      "node_modules",
+      "dist"
+    ],
+    "files": [
+      "src/index.ts",
+    ],
+    "include": [
+      "./src/**/*.ts",
+      "./tests/**/*.ts"
+    ]
+  }
