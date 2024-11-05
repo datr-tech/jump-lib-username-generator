@@ -1,0 +1,5 @@
+import { IPermutationHOFFuncGenerateUsernameModelsInputModel } from './IPermutationHOFFuncGenerateUsernameModelsInputModel';
+
+export interface IPermutationHOFFuncGenerateUsernameModelsInput {
+	fullNameOrUsernameModel: IPermutationHOFFuncGenerateUsernameModelsInputModel;
+}

@@ -1,5 +1,7 @@
-import { IModelFullName } from '@app/interfaces/models';
+import { IModelFullName, IModelUsername } from '@app/interfaces/models';
+import { IPermutationConstructor } from '@app/interfaces/permutations';
 
 export interface IControllerUsernameGeneratorFuncGenerateUsernameModelsInput {
-	fullNameModel: IModelFullName;
+	fullNameOrUsernameModel: IModelFullName | IModelUsername;
+	permutationConstructorsArr: IPermutationConstructor[];
 }
