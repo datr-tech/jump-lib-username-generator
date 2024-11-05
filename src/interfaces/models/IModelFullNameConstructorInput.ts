@@ -4,4 +4,5 @@ import { ICommonFullNameStr } from '@app/interfaces/common';
 export interface IModelFullNameConstructorInput {
 	fullNameStr: ICommonFullNameStr;
 	fullNameDelimiterEnum: FullNameDelimiterEnum;
+	surnameIndex?: number;
 }

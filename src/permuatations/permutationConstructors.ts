@@ -2,6 +2,7 @@ import { PermutationFullNameModelCaseLeadingUpper } from './PermutationFullNameM
 import { PermutationFullNameModelCaseLower } from './PermutationFullNameModelCaseLower';
 import { PermutationFullNameModelCaseUpper } from './PermutationFullNameModelCaseUpper';
 import { PermutationFullNameModelFirstInitial } from './PermutationFullNameModelFirstInitial';
+import { PermutationFullNameModelCaseYearSuffix } from './PermutationFullNameModelCaseYearSuffix';
 import {
 	IPermutationConstructor,
 	IPermutationConstructors,
@@ -16,6 +17,7 @@ export const permutationConstructors: IPermutationConstructors =
 		permutations.push(PermutationFullNameModelCaseLower);
 		permutations.push(PermutationFullNameModelCaseUpper);
 		permutations.push(PermutationFullNameModelFirstInitial);
+		permutations.push(PermutationFullNameModelCaseYearSuffix);
 
 		return permutations;
 	};

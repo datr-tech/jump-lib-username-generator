@@ -13,7 +13,7 @@ describe('UsernameGeneratorController', (): void => {
 				/*
 				 * Arrange: expected
 				 */
-				const usernameModelsLengthExpected = 48;
+				const usernameModelsLengthExpected = 157323;
 
 				/*
 				 * Arrange: common

@@ -17,6 +17,7 @@ import {
  * @param {IModelFullNameConstructorInput} args
  * @param {ICommonFullNameStr} args.fullNameStr
  * @param {FullNameDelimiterEnum} args.fullNameDelimiterEnum
+ * @param {number} args.surnameIndex - OPTIONAL
  * @returns {IModelFullName}
  *
  * @throws When 'fullNameStr' is invalid
@@ -28,6 +29,7 @@ import {
 export const FullNameModel: IModelFullNameConstructor = ({
 	fullNameStr,
 	fullNameDelimiterEnum,
+	surnameIndex,
 }: IModelFullNameConstructorInput): IModelFullName => {
 	let forename: ICommonNameStr;
 	let surname: ICommonNameStr;
@@ -85,14 +87,17 @@ export const FullNameModel: IModelFullNameConstructor = ({
 			errorMessage: "Invalid 'forename'",
 		});
 
+		if (!surnameIndex) {
+			surnameIndex = fullNameArrLen - 1;
+		}
+
 		assertCondition({
-			condition:
-				typeof fullNameArr[fullNameArrLen - 1] !== 'undefined' && !!fullNameArr[fullNameArrLen - 1],
+			condition: typeof fullNameArr[surnameIndex] !== 'undefined' && !!fullNameArr[surnameIndex],
 			errorMessage: "Invalid 'surname'",
 		});
 
 		forename = fullNameArr[0];
-		surname = fullNameArr[fullNameArrLen - 1];
+		surname = fullNameArr[surnameIndex];
 	};
 
 	main();

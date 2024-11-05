@@ -2,3 +2,4 @@ export { generateUsernameModelsFullNameModelCaseLeadingUpper } from './generateU
 export { generateUsernameModelsFullNameModelCaseLower } from './generateUserModelsFullNameModelCaseLower';
 export { generateUsernameModelsFullNameModelCaseUpper } from './generateUserModelsFullNameModelCaseUpper';
 export { generateUsernameModelsFullNameModelFirstInitial } from './generateUserModelsFullNameModelFirstInitial';
+export { generateUsernameModelsFullNameModelYearSuffix } from './generateUserModelsFullNameModelYearSuffix';

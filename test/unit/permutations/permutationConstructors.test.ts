@@ -6,7 +6,7 @@ describe('permutationsConstructors', (): void => {
 		/*
 		 * Arrange: expected
 		 */
-		const permutationConstructorsLengthExpected = 4;
+		const permutationConstructorsLengthExpected = 5;
 
 		/*
 		 * Act
