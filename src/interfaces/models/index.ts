@@ -9,3 +9,9 @@ export { IModelFullNamesConstructorInput } from './IModelFullNamesConstructorInp
 export { IModelFullNamesFuncNext } from './IModelFullNamesFuncNext';
 export { IModelFullNamesFuncNextOutput } from './IModelFullNamesFuncNextOutput';
 export { IModelFullNamesPropLength } from './IModelFullNamesPropLength';
+export { IModelUsername } from './IModelUsername';
+export { IModelUsernameConstructor } from './IModelUsernameConstructor';
+export { IModelUsernameConstructorInput } from './IModelUsernameConstructorInput';
+export { IModelUsernameFuncGetForename } from './IModelUsernameFuncGetForename';
+export { IModelUsernameFuncGetSurname } from './IModelUsernameFuncGetSurname';
+export { IModelUsernameFuncGetUsername } from './IModelUsernameFuncGetUsername';

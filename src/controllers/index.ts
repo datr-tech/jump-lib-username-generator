@@ -1,0 +1,1 @@
+export { UsernameGeneratorController } from './UsernameGeneratorController';
