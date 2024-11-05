@@ -1,11 +1,12 @@
-import { UsernameModel } from '@app/models';
-import { IModelUsername } from '@app/interfaces/models';
+import { FullNameModel, UsernameModel } from '@app/models';
+import { IModelFullName, IModelUsername } from '@app/interfaces/models';
 import {
 	IPermutationHOFFuncGenerateUsernameModels,
 	IPermutationHOFFuncGenerateUsernameModelsInput,
 	IPermutationHOFFuncGenerateUsernameModelsOutput,
 } from '@app/interfaces/permutations';
 import { ICommonNameStr } from '@app/interfaces/common';
+import { FullNameDelimiterEnum } from '@app/config/enums';
 
 /**
  * @public
@@ -28,7 +29,17 @@ export const generateUsernameModelsFullNameModelFirstInitial: IPermutationHOFFun
 			const firstInitial: ICommonNameStr = forename.substring(0, 1);
 			const usernameStr: ICommonNameStr = `${firstInitial}.${surname}`;
 
-			usernameModels.push(UsernameModel({ fullNameOrUsernameModel, usernameStr }));
+			const fullNameOrUsernameModelUpdated: IModelFullName = FullNameModel({
+				fullNameStr: usernameStr,
+				fullNameDelimiterEnum: FullNameDelimiterEnum.PERIOD,
+			});
+
+			usernameModels.push(
+				UsernameModel({
+					fullNameOrUsernameModel: fullNameOrUsernameModelUpdated,
+					usernameStr,
+				}),
+			);
 		}
 
 		return usernameModels;

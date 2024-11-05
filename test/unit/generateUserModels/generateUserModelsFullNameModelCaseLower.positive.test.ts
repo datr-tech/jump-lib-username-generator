@@ -1,26 +1,26 @@
 import { FullNameDelimiterEnum } from '@app/config/enums';
 import { FullNameModel } from '@app/models';
-import { generateUsernameModelsFullNameModelFirstInitial } from '@app/permuatations/generateUserModels';
+import { generateUsernameModelsFullNameModelCaseLower } from '@app/generateUserModels';
 import { ICommonFullNameStr, ICommonNameStr } from '@app/interfaces/common';
 import { IModelFullName, IModelUsername } from '@app/interfaces/models';
 
-describe('generateUserModelsFullNameModelFirstInitial', (): void => {
+describe('generateUserModelsFullNameModelCaseLower', (): void => {
 	test("should return a 'usernameModel' with the expected 'username'", (): void => {
 		/*
 		 * Arrange: expected
 		 */
-		const usernameStrExpected: ICommonNameStr = 'a.def';
+		const usernameStrExpected: ICommonNameStr = 'abc.def';
 		/*
 		 * Arrange: common
 		 */
 		const fullNameDelimiterEnum: FullNameDelimiterEnum = FullNameDelimiterEnum.COMMA;
-		const fullNameStr: ICommonFullNameStr = 'abc,def';
+		const fullNameStr: ICommonFullNameStr = 'abc,DEF';
 		const fullNameModel: IModelFullName = FullNameModel({ fullNameStr, fullNameDelimiterEnum });
 
 		/*
 		 * Act
 		 */
-		const usernameModels: IModelUsername[] = generateUsernameModelsFullNameModelFirstInitial({
+		const usernameModels: IModelUsername[] = generateUsernameModelsFullNameModelCaseLower({
 			fullNameOrUsernameModel: fullNameModel,
 		});
 		const usernameStrFound: ICommonNameStr = usernameModels[0].getUsername();

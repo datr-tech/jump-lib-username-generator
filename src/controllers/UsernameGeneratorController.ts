@@ -59,12 +59,31 @@ export const UsernameGeneratorController: IControllerUsernameGeneratorConstructo
 			const fullNameModel: IModelFullName = fullNameModelWrapper.value;
 			const permutationConstructorsArr: IPermutationConstructorsOutput = permutationConstructors();
 
+			/*
+			 * Use the permutations to generate usernameModels
+			 */
+			const generatedUsernameModels: IModelUsername[] = generateUsernameModels({
+				fullNameOrUsernameModel: fullNameModel,
+				permutationConstructorsArr,
+			});
+
+			/*
+			 * Then apply the permutations to each of the generated usernameModels,
+			 * before combining the result with the overarching 'usernameModels' array.
+			 */
 			usernameModels = usernameModels.concat(
-				generateUsernameModels({
-					fullNameOrUsernameModel: fullNameModel,
-					permutationConstructorsArr,
-				}),
+				generatedUsernameModels.reduce(
+					(arr: IModelUsername[], usernameModel: IModelUsername): IModelUsername[] =>
+						arr.concat(
+							generateUsernameModels({
+								fullNameOrUsernameModel: usernameModel,
+								permutationConstructorsArr,
+							}),
+						),
+					[],
+				),
 			);
+
 			fullNameModelWrapper = fullNamesModel.next();
 		}
 
