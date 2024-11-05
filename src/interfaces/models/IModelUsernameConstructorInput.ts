@@ -1,5 +1,8 @@
+import { ICommonNameStr } from '@app/interfaces/common';
 import { IModelFullName } from './IModelFullName';
+import { IModelUsername } from './IModelUsername';
 
 export interface IModelUsernameConstructorInput {
-	fullNameModel: IModelFullName;
+	fullNameOrUsernameModel: IModelFullName | IModelUsername;
+	usernameStr?: ICommonNameStr;
 }

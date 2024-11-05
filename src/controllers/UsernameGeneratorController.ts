@@ -1,4 +1,5 @@
-import { FullNamesModel, UsernameModel } from '@app/models';
+import { FullNamesModel } from '@app/models';
+import { permutationConstructors } from '@app/permuatations';
 import { FilePathService, FullNamesService } from '@app/services';
 import { ICommonFuncMain } from '@app/interfaces/common';
 import {
@@ -16,6 +17,10 @@ import {
 	IModelUsername,
 } from '@app/interfaces/models';
 import { IServiceFilePath, IServiceFullNames } from '@app/interfaces/services';
+import {
+	IPermutationConstructor,
+	IPermutationConstructorsOutput,
+} from '@app/interfaces/permutations';
 
 /**
  * @public
@@ -48,13 +53,18 @@ export const UsernameGeneratorController: IControllerUsernameGeneratorConstructo
 	 */
 	const generate: IControllerUsernameGeneratorFuncGenerate = (): IModelUsername[] => {
 		let usernameModels: IModelUsername[] = [];
-
 		let fullNameModelWrapper: IModelFullNamesFuncNextOutput = fullNamesModel.next();
 
 		while (!fullNameModelWrapper.done) {
 			const fullNameModel: IModelFullName = fullNameModelWrapper.value;
-			const generatedUsernameModels: IModelUsername[] = generateUsernameModels({ fullNameModel });
-			usernameModels = usernameModels.concat(generatedUsernameModels);
+			const permutationConstructorsArr: IPermutationConstructorsOutput = permutationConstructors();
+
+			usernameModels = usernameModels.concat(
+				generateUsernameModels({
+					fullNameOrUsernameModel: fullNameModel,
+					permutationConstructorsArr,
+				}),
+			);
 			fullNameModelWrapper = fullNamesModel.next();
 		}
 
@@ -65,30 +75,28 @@ export const UsernameGeneratorController: IControllerUsernameGeneratorConstructo
 	 * @public
 	 *
 	 * Generate username models from a full name model in conjunction
-	 * with each of the relevant permutations.
+	 * with each of the relevant permutationConstructors.
 	 *
 	 * @param {IControllerUsernameGeneratorFuncGenerateUsernameModelsInput} args
-	 * @param {IModelFullName} args.fullNameModel
+	 * @param {IModelFullName} args.fullNameOrUsernameModel
+	 * @param {IPermutationConstructor[]} args.permutationConstructorsArr
 	 * @returns {IModelUsername[]}
 	 */
 	const generateUsernameModels: IControllerUsernameGeneratorFuncGenerateUsernameModels = ({
-		fullNameModel,
+		fullNameOrUsernameModel,
+		permutationConstructorsArr,
 	}: IControllerUsernameGeneratorFuncGenerateUsernameModelsInput): IModelUsername[] => {
-		const usernameModel: IModelUsername = UsernameModel({ fullNameModel });
-
-		return [usernameModel];
-
-		/*
-		 * @TODO Once the permutations have been written,
-		 * add the required code below. Also, this function's
-		 * signature may require altering, in order to support
-		 * an array of permutations
-		 */
-
-		// iterate across the full name permutations
-		// generate a username name model from the first permutation
-		// add the generated model to the usernameModels array
-		// repeat
+		return permutationConstructorsArr.reduce(
+			(
+				acc: IModelUsername[],
+				PermutationConstructor: IPermutationConstructor,
+			): IModelUsername[] => {
+				return acc.concat(
+					PermutationConstructor({ fullNameOrUsernameModel }).generateUsernameModels(),
+				);
+			},
+			[],
+		);
 	};
 
 	/**

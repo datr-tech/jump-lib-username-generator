@@ -16,8 +16,11 @@ describe('UsernameModel', (): void => {
 				 */
 				const fullNameStr: ICommonFullNameStr = `${forenameExpected},surname`;
 				const fullNameDelimiterEnum: FullNameDelimiterEnum = FullNameDelimiterEnum.COMMA;
-				const fullNameModel: IModelFullName = FullNameModel({ fullNameStr, fullNameDelimiterEnum });
-				const usernameModel: IModelUsername = UsernameModel({ fullNameModel });
+				const fullNameOrUsernameModel: IModelFullName = FullNameModel({
+					fullNameStr,
+					fullNameDelimiterEnum,
+				});
+				const usernameModel: IModelUsername = UsernameModel({ fullNameOrUsernameModel });
 
 				/*
 				 * Act
